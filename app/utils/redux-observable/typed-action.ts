@@ -24,7 +24,7 @@ ActionsObservable.prototype.actionsOfType = actionsOfType;
 
 // Extend the TypeScript interface for Observable to include the operator:
 declare module "redux-observable" {
-  interface ActionsObservable<T> {
+  interface ActionsObservable<T extends Action> {
     actionsOfType: typeof actionsOfType;
   }
 }

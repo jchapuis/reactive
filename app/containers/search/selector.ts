@@ -1,13 +1,13 @@
 // Redux selectors: any time the store is updated, mapStateToProps will be called. 
 // The results of mapStateToProps must be a plain object, which will be merged into the component’s props.
-import { MapStateToProps, MapDispatchToPropsFunction } from "@types/react-redux";
+import { MapStateToProps, MapDispatchToPropsFunction } from "react-redux";
 import { SearchPageStateProps, SearchSuggestionProps, SearchPageDispatchProps } from "components/search-page";
 import { AppState } from "app-state";
 import { ErrorResult, ContentResult } from "containers/search/state";
 import { Dispatch, bindActionCreators } from "redux";
 import { inputChanged, suggestionSelected, showMenu, hideMenu, blurMenu } from "containers/search/actions";
 
-export const mapStateToProps: MapStateToProps<SearchPageStateProps, any> = (state: AppState, ownProps: any) => {
+export const mapStateToProps: MapStateToProps<SearchPageStateProps, any, AppState> = (state: AppState, ownProps: any) => {
     const result = state.search.searchResult;
     return {
         suggestions: state.search.suggestions.map((s, idx) => {

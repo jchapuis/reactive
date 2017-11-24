@@ -49,7 +49,7 @@ module.exports = {
         // Html webpack plugins generates an HTML entry point to the application
         new HtmlWebpackPlugin({
             // Title of generated entry page
-            title: 'react-hot-ts',
+            title: 'Reactive Wikipedia',
             chunksSortMode: 'dependency',
             // Template page (contains the react application root element)
             template: path.resolve(__dirname, './app/index.ejs')

@@ -11,7 +11,7 @@ import { combineEpics } from "redux-observable";
 import { actionsOfType } from "utils/redux-observable/typed-action";
 const ensureImport: any = actionsOfType;
 
-const SearchDelay = 300;
+const SearchDelay = 100;
 export const searchOnInputChangedEpic =
     (action$: ActionsObservable<Actions>, store: MiddlewareAPI<SearchState>, services: IServices): Rx.Observable<Actions> => {
         return action$
@@ -69,10 +69,9 @@ export const searchEpic =
                 input.length > 0 ?
                     services.wikipedia.pageContent(input)
                         .map(p => new ContentResult(p))
-                        .catch((error: Error) => {
-                            console.log("search caught error " + error);
-                            return Rx.Observable.of<SearchResult>(new ErrorResult(error.message));
-                        }) : Rx.Observable.of<SearchResult>(EmptyResult.Instance))
+                        .catch((error: Error) => 
+                             Rx.Observable.of<SearchResult>(new ErrorResult(error.message))) 
+                    : Rx.Observable.of<SearchResult>(EmptyResult.Instance))
             .map(searchFulfilled);
     };
 

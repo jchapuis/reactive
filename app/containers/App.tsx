@@ -11,7 +11,7 @@ const App = () =>
     (
         <ConnectedRouter history={browserHistory}>
             <div>
-                <Route exact path="/" component={SearchContainer}/>
+                <Route path="/" component={SearchContainer}/>
             </div>
         </ConnectedRouter>
     );

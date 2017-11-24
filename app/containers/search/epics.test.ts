@@ -26,7 +26,7 @@ describe("/app/containers/search/epics", () => {
 
         // Define marbles
         const inputActions = {
-            a: inputChanged("r"),
+            a: inputChanged("rr"),
             b: inputChanged("rx"),
             c: inputChanged("rxjs")
         };
@@ -54,7 +54,7 @@ describe("/app/containers/search/epics", () => {
         // Create test scheduler
         const testScheduler = createTestScheduler();
 
-        // Mock services 
+        // Mock services instance, passing in our test scheduler
         const servicesMock = TypeMoq.Mock.ofType<IServices>();
         servicesMock.setup(m => m.scheduler).returns(() => testScheduler);
         const services = servicesMock.object;
@@ -69,8 +69,8 @@ describe("/app/containers/search/epics", () => {
             b: search("rx"),
             c: search("rxjs")
         };
-        const inputMarble =     "-ab" + frames(30) + "-c";
-        const outputMarble =    "--" + frames(30) + "b-" + frames(30) + "c";
+        const inputMarble =     "-ab" + frames(10) + "-c";
+        const outputMarble =    "------------b-----------c";
 
         // Mock input actions stream
         const action$ = createTestAction$FromMarbles<Actions>(testScheduler, inputMarble, inputActions);
