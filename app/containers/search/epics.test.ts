@@ -1,6 +1,6 @@
-import {ErrorResult, ContentResult,  SearchState} from './state';
+import { ErrorResult, ContentResult, SearchState } from './state';
 import { searchOnInputChangedEpic, searchEpic, suggestOnInputChangedEpic } from "./epics";
-import {suggest, searchFulfilled,  inputChanged,   search,   Actions} from './actions';
+import { suggest, searchFulfilled, inputChanged, search, Actions } from './actions';
 import { IServices } from "services/services";
 import { IWikipediaService } from "services/wikipedia";
 import * as Rx from "rxjs";
@@ -34,9 +34,9 @@ describe("/app/containers/search/epics", () => {
             b: suggest("rx", false),
             c: suggest("rxjs", false)
         };
-        const inputMarble =     "-ab---------------------c";
-        const outputMarble =    "----------------------b---------------------c";
-        
+        const inputMarble = "-ab---------------------c";
+        const outputMarble = "----------------------b---------------------c";
+
         // Mock input actions stream
         const action$ = createTestAction$FromMarbles<Actions>(testScheduler, inputMarble, inputActions);
 
@@ -61,7 +61,7 @@ describe("/app/containers/search/epics", () => {
 
         // Define marbles
         const inputActions = {
-            a: inputChanged("r"),
+            a: inputChanged("rr"),
             b: inputChanged("rx"),
             c: inputChanged("rxjs")
         };
@@ -69,8 +69,8 @@ describe("/app/containers/search/epics", () => {
             b: search("rx"),
             c: search("rxjs")
         };
-        const inputMarble =     "-ab" + frames(10) + "-c";
-        const outputMarble =    "------------b-----------c";
+        const inputMarble = "-ab" + frames(30) + "-c";
+        const outputMarble = "--" + frames(30) + "b-" + frames(30) + "c";
 
         // Mock input actions stream
         const action$ = createTestAction$FromMarbles<Actions>(testScheduler, inputMarble, inputActions);
@@ -94,7 +94,7 @@ describe("/app/containers/search/epics", () => {
         servicesMock.setup(m => m.scheduler).returns(() => testScheduler);
         const services = servicesMock.object;
 
-         // Define marbles
+        // Define marbles
         const inputActions = {
             a: inputChanged("r"),
             b: inputChanged("rx"),
@@ -103,9 +103,9 @@ describe("/app/containers/search/epics", () => {
         const outputActions = {
             b: search("rx")
         };
-        const inputMarble =  "-ab" + frames(30) + "-cb";
+        const inputMarble = "-ab" + frames(30) + "-cb";
         const outputMarble = "--" + frames(30) + "b-";
-        
+
         // Mock input actions stream
         const action$ = createTestAction$FromMarbles<Actions>(testScheduler, inputMarble, inputActions);
 
@@ -122,7 +122,7 @@ describe("/app/containers/search/epics", () => {
     test("searchEpic with content", (done) => {
         const searchInput = "rxjs";
         const searchResult = "Reactive programming";
-       
+
         // Mock services 
         const servicesMock = TypeMoq.Mock.ofType<IServices>();
         const wikipediaMock = TypeMoq.Mock.ofType<IWikipediaService>();
@@ -130,7 +130,7 @@ describe("/app/containers/search/epics", () => {
         servicesMock.setup(m => m.wikipedia).returns(() => wikipediaMock.object);
         const services = servicesMock.object;
 
-         // Mock input actions stream
+        // Mock input actions stream
         const action$ = createTestAction$<Actions>(search(searchInput));
 
         // Apply epic on actions observable
@@ -138,8 +138,8 @@ describe("/app/containers/search/epics", () => {
 
         // Assert on the resulting actions observable   
         outputAction$.subscribe(
-            action => expect(action).toEqual(searchFulfilled(new ContentResult(searchResult))), 
-            error => fail(error), 
+            action => expect(action).toEqual(searchFulfilled(new ContentResult(searchResult))),
+            error => fail(error),
             done
         );
     });
@@ -147,7 +147,7 @@ describe("/app/containers/search/epics", () => {
     test("searchEpic with error", (done) => {
         const searchInput = "rxjs";
         const searchError = "Some error";
-       
+
         // Mock services 
         const servicesMock = TypeMoq.Mock.ofType<IServices>();
         const wikipediaMock = TypeMoq.Mock.ofType<IWikipediaService>();
@@ -155,7 +155,7 @@ describe("/app/containers/search/epics", () => {
         servicesMock.setup(m => m.wikipedia).returns(() => wikipediaMock.object);
         const services = servicesMock.object;
 
-         // Mock input actions stream
+        // Mock input actions stream
         const action$ = createTestAction$<Actions>(search(searchInput));
 
         // Apply epic on actions observable
@@ -163,7 +163,7 @@ describe("/app/containers/search/epics", () => {
 
         // Assert on the resulting actions observable   
         outputAction$.subscribe(
-            action => expect(action).toEqual(searchFulfilled(new ErrorResult(searchError))), 
+            action => expect(action).toEqual(searchFulfilled(new ErrorResult(searchError))),
             error => fail(error),
             done
         );

@@ -11,7 +11,7 @@ import { combineEpics } from "redux-observable";
 import { actionsOfType } from "utils/redux-observable/typed-action";
 const ensureImport: any = actionsOfType;
 
-const SearchDelay = 100;
+const SearchDelay = 300;
 export const searchOnInputChangedEpic =
     (action$: ActionsObservable<Actions>, store: MiddlewareAPI<SearchState>, services: IServices): Rx.Observable<Actions> => {
         return action$
