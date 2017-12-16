@@ -1,5 +1,7 @@
-# Reactive programming course
-Material, samples and exercises for reactive programming course
+# Reactive wikipedia search demo application
+Demo application of wikipedia search-as-you-type experience, written in TypeScript, using React, Redux-Observable & RxJS and fully marble-tested.
+
+[The live demo can be found here.](http://jonaschapuis.com/wikisearch/)
 
 ## Setup guide
 1. Install node.js and npm package manager: https://nodejs.org/en/, or e.g. `sudo apt-get nodejs`, `sudo apt-get install npm`, `sudo apt-get install nodejs-legacy` (this latter one installs a symlink for `node` command to `nodejs`)
